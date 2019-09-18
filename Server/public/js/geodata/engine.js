@@ -1,9 +1,16 @@
-// fecha-hora // lat // lon // aceleracion // luz // microfono 
+// fecha-hora // lat // lon // aceleracion // luz // ruido 
+
+// Geolocation
 var lat;
 var lon;
+// Light sensor
 var exposure;
+// Microphone
+var noise;
+// Datetime
 var date;
-var acc = {
+// Accelerometer
+var accelerometer = {
     x: 0, 
     y: 0, 
     z: 0
@@ -93,14 +100,14 @@ function accelerometer() {
     }
 }
 
-window.ubicacion()
-window.light()
 
-
+// TODO Add noise and accelerometer
 function a() {
-    console.log(Date.now, window.lat, window.lon, window.exposure);
+    console.log((new Date()).toString(), window.lat, window.lon, window.exposure);
 }
 
-var t = setInterval(a.call, 1000);
+window.ubicacion();
+window.light();
+//window.accelerometer();
 
-clearInterval(t);
+var t = setInterval(a, 1000);
