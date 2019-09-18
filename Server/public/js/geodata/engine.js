@@ -1,3 +1,5 @@
+import { functionExpression } from "babel-types";
+
 // fecha-hora // lat // lon // aceleracion // luz // ruido 
 
 // Geolocation
@@ -68,7 +70,6 @@ function light() {
 }
 
 function accelerometer() {
-    let accelerometer = null;
     try {
         navigator.permissions.query({ name: 'accelerometer' }).then(result => {
             if (result.state === 'denied') {
@@ -102,12 +103,12 @@ function accelerometer() {
 
 
 // TODO Add noise and accelerometer
-function a() {
-    console.log((new Date()).toString(), window.lat, window.lon, window.exposure);
+function sendData() {
+    console.log((new Date()).getTime(), window.lat, window.lon, window.exposure);
 }
 
 window.ubicacion();
 window.light();
 //window.accelerometer();
 
-var t = setInterval(a, 1000);
+var t = setInterval(sendData, 1000);
