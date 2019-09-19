@@ -1,18 +1,28 @@
 URL = window.URL || window.webkitURL;
-var gumStream;
-// Stream from getUserMedia
-var rec;
-// Reorder.js object
-var input;
+
+var gumStream; // Stream from getUserMedia
+var rec; // Reorder.js object
+
 // MediaStreamAudioSourceNode we'll be recording 
 // shim for AudioContext when its not available
-var AudioContext = window.AudioContext || window.webkitAudioContext;
-var audioContext = new AudioContext;
-// New audio context to help us record
+var input;
 
-function noise() {}
+var AudioContext = window.AudioContext || window.webkitAudioContext;
+
+var recordButton = document.getElementById("recordButton");
+recordButton.addEventListener("click", noise);
+
+function noise() {
+    startRecording();
+    var t = setInterval(saveRecording, 5000);
+}
 
 function startRecording() {
+    document.getElementById("recordButton").disabled = true;
+
+    // New audio context to help us record
+    var audioContext = new AudioContext;
+
     // Simple constraints object
     var constraints = {
         audio: true, 
@@ -40,13 +50,14 @@ function startRecording() {
     });
 }
 
-function stopRecording() {
+function saveRecording() {
     console.log("stopping recording ");
-    
     rec.stop();
-    gumStream.getAudioTracks()[0].stop()
-
-    rec.exportWAV(createDownloadLink)
+    gumStream.getAudioTracks()[0];
+    rec.exportWAV(createDownloadLink);
+    
+    rec.clear();
+    rec.record();
 }
 
 function createDownloadLink(blob) {
@@ -62,7 +73,7 @@ function createDownloadLink(blob) {
     link.download = new Date().toISOString() + '.wav';
     link.innerHTML = link.download;
     // add the new audio and <a> elements to the <li> element
-    li.appendChild(au);
+    li.appendChild(audio);
     li.appendChild(link);
     // add the <li> element to the ordered list
     recordingsList.appendChild(li); 
