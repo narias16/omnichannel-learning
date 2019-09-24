@@ -1,5 +1,3 @@
-import { functionExpression } from "babel-types";
-
 // fecha-hora // lat // lon // aceleracion // luz // ruido 
 
 // Geolocation
@@ -100,7 +98,6 @@ function accelerometer() {
         }
     }
 }
-
 
 // TODO Add noise and accelerometer
 function sendData() {
