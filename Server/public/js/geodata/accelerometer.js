@@ -1,4 +1,4 @@
-function accelerometer() {
+
     let accelerometer = null;
     try {
         navigator.permissions.query({ name: 'accelerometer' }).then(result => {
@@ -18,7 +18,6 @@ function accelerometer() {
             }); 
             accelerometer.start();
         });
-        
     } catch (error) {
         // Handle construction errors.
         if (error.name === 'SecurityError') {
@@ -30,4 +29,3 @@ function accelerometer() {
             throw error;
         }
     }
-}

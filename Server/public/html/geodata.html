@@ -21,6 +21,10 @@
 
 <body>
 
+        <div id="controls">
+                <button id="recordButton">Enable Mic</button>
+            </div>
+
     <!--================ Start Header Menu Area =================-->
     <header class="header_area">
 
@@ -79,6 +83,9 @@
     <!--================End Home Banner Area =================-->
 
     <!--================ Start Popular Courses Area =================-->
+    <h3>Recordings</h3>
+    <ol id="recordingsList"></ol>
+ 
     <div class="popular_courses lite_bg">
         <div class="container">
             <div class="row justify-content-center">
@@ -93,7 +100,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="single_course">
                         <div class="course_head overlay">
-                            <img class="img-fluid w-100" src="img/courses/trainer1.jpg" alt="">
+                            
                         </div>
                         <div class="course_content">
                             <h4>
@@ -124,7 +131,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="single_course">
                         <div class="course_head overlay">
-                            <img class="img-fluid w-100" src="img/courses/trainer1.jpg" alt="">
+                            
                         </div>
                         <div class="course_content">
                             <h4>
@@ -155,7 +162,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="single_course">
                         <div class="course_head overlay">
-                            <img class="img-fluid w-100" src="img/courses/trainer1.jpg" alt="">
+                            
                         </div>
                         <div class="course_content">
                             <h4>
@@ -186,7 +193,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="single_course">
                         <div class="course_head overlay">
-                            <img class="img-fluid w-100" src="img/courses/trainer1.jpg" alt="">
+                            
                         </div>
                         <div class="course_content">
                             <h4>
@@ -255,7 +262,10 @@
     <!--================ End footer Area  =================-->
 
     <!--Geodata-->
-    <script src="/js/geodata/location.js"></script>
+    <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+    <script src="/js/geodata/engine.js"></script>
+    <script src="/js/geodata/noise.js"></script>
+
 </body>
 
 </html>
