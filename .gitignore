@@ -11,6 +11,7 @@ src_managed/
 project/boot/
 project/plugins/project/
 /bin/
+/SensorData/training_set/
 
 # input
 *.txt
