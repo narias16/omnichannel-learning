@@ -99,7 +99,7 @@ function accelerometer() {
     }
 }
 
-// TODO Add noise and accelerometer
+// TODO Add noise and accelerometer and connectivity
 function sendData() {
     console.log((new Date()).getTime(), window.lat, window.lon, window.exposure);
 }

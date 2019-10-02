@@ -1,0 +1,44 @@
+target
+ideatarget
+.target
+bin
+.cache
+.cache-main
+.cache-tests
+.classpath
+.project
+.tmpBin
+.factorypath
+.settings
+logs
+
+# editors specific
+*.swp
+*~*
+*#*
+.cache-main
+.classpath
+.project
+.settings/
+.*.md.html
+.idea/
+
+# scala/java specific
+*.class
+*.log
+
+# sbt/mvn specific
+.cache
+.history
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+/bin/
+
+# input
+*.txt
+
