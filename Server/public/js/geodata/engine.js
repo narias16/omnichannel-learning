@@ -1,4 +1,4 @@
-// fecha-hora // lat // lon // aceleracion // luz // ruido 
+// fecha-hora // lat // lon // luz // aceleracion // conectividad //ruido 
 
 // Geolocation
 var lat;
@@ -9,12 +9,6 @@ var exposure;
 var noise;
 // Datetime
 var date;
-// Accelerometer
-var accelerometer = {
-    x: 0,
-    y: 0,
-    z: 0
-}
 
 function ubicacion() {
     if (navigator.geolocation) {
@@ -67,7 +61,7 @@ function light() {
     }
 }
 
-function accelerometer() {
+function getAccelerometer() {
     try {
         navigator.permissions.query({ name: 'accelerometer' }).then(result => {
             if (result.state === 'denied') {
@@ -77,12 +71,13 @@ function accelerometer() {
             // Use the sensor.
             accelerometer = new Accelerometer({ referenceFrame: 'device' });
             accelerometer.addEventListener('activate', () => console.log('Ready to measure accelerometer'))
-            accelerometer.addEventListener('error', event => console.log(`Error: ${event.error.name}`));
+            accelerometer.addEventListener('error', event => {
+                window.acc = 0;
+                console.log(`Error: ${event.error.name}`);
+            });
             accelerometer.addEventListener('reading', e => {
-                window.acc.x = accelerometer.x
-                window.acc.y = accelerometer.y
-                window.acc.z = accelerometer.z
-                reloadOnShake(accelerometer)
+                window.acc = accelerometer.x + accelerometer.y + accelerometer.z;
+                reloadOnShake(accelerometer);
             });
             accelerometer.start();
         });
@@ -103,11 +98,11 @@ function accelerometer() {
 function sendData() {
     var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
-    console.log((new Date()).getTime(), window.lat, window.lon, window.exposure, connection.effectiveType);
+    console.log((new Date()).getTime(), window.lat, window.lon, window.exposure, connection.effectiveType, window.acc);
 }
 
 window.ubicacion();
 window.light();
-//window.accelerometer();
+window.getAccelerometer();
 
 var t = setInterval(sendData, 1000);
