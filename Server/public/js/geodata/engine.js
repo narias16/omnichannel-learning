@@ -11,8 +11,8 @@ var noise;
 var date;
 // Accelerometer
 var accelerometer = {
-    x: 0, 
-    y: 0, 
+    x: 0,
+    y: 0,
     z: 0
 }
 
@@ -24,7 +24,7 @@ function ubicacion() {
                 lon: position.coords.longitude,
             };
             window.lat = pos.lat
-            window.lon = pos.lon 
+            window.lon = pos.lon
         });
     } else {
         console.log('Browser doesnt support Geolocation');
@@ -38,8 +38,8 @@ function light() {
                 console.log('Permission to use ambient light sensor is denied.');
                 return;
             }
-        
-            const als = new AmbientLightSensor({frequency: 10});
+
+            const als = new AmbientLightSensor({ frequency: 10 });
             als.addEventListener('activate', () => console.log('Ready to measure EV.'));
             als.addEventListener('error', event => console.log(`Error: ${event.error.name}`));
             als.addEventListener('reading', () => {
@@ -49,9 +49,9 @@ function light() {
                 const C = 250;
 
                 let lux = als.illuminance
-                window.exposure = Math.round(Math.log2((lux * ISO) / C)); 
+                window.exposure = Math.round(Math.log2((lux * ISO) / C));
             });
-        
+
             als.start();
         });
     } catch (error) {
@@ -83,7 +83,7 @@ function accelerometer() {
                 window.acc.y = accelerometer.y
                 window.acc.z = accelerometer.z
                 reloadOnShake(accelerometer)
-            }); 
+            });
             accelerometer.start();
         });
     } catch (error) {
@@ -99,9 +99,11 @@ function accelerometer() {
     }
 }
 
-// TODO Add noise and accelerometer
+// TODO Add noise and accelerometer and connectivity
 function sendData() {
-    console.log((new Date()).getTime(), window.lat, window.lon, window.exposure);
+    var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+
+    console.log((new Date()).getTime(), window.lat, window.lon, window.exposure, connection.effectiveType);
 }
 
 window.ubicacion();
