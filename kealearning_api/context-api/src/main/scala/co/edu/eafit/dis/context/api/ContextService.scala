@@ -43,6 +43,7 @@ trait ContextService extends Service {
 // TODO - Connect frontend service
 // TODO - Que la base de datos no persista el contexto sino que se guarde en memoria
 // TODO - Add noise and accelerometer and connectivity from client
+// TODO - recommendation microservice
 case class RawContextRegistry(timestamp: String,
                            ruido: Double, luz: Double, lat: Double, lon: Double,
                            conectividad: String, acc: Double, canal: String)
