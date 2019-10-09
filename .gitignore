@@ -24,6 +24,7 @@ bin
 .cache-tests
 .classpath
 .project
+.metals
 .tmpBin
 .factorypath
 .settings

@@ -41,4 +41,7 @@ abstract class ContextApplication(context: LagomApplicationContext)
 
   // Register the context persistent entity
   persistentEntityRegistry.register(wire[ContextEntity])
+
+  // Register the context read side processor
+  readSide.register(wire[ContextEntityProcessor])
 }

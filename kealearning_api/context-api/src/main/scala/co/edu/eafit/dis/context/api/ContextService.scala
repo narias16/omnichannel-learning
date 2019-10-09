@@ -3,7 +3,9 @@ package co.edu.eafit.dis.context.api
 import akka.{Done, NotUsed}
 import com.lightbend.lagom.scaladsl.api.transport.Method
 import com.lightbend.lagom.scaladsl.api.{Descriptor, Service, ServiceCall}
+import com.lightbend.lagom.scaladsl.api.deser.MessageSerializer._
 import play.api.libs.json.{Format, Json}
+
 
 object ContextService {
   val TOPIC_NAME = "context"
@@ -17,11 +19,20 @@ object ContextService {
   */
 trait ContextService extends Service {
   /**
-    * Example: curl http://localhost:9000/api/context/:id/save
+    * curl http://localhost:9000/api/context/:id/save
     */
   def saveContextRegistry(user_id: String): ServiceCall[RawContextRegistry, Done]
 
-  def getContextObject(user_id: String): ServiceCall[NotUsed, List[ContextRegistry]]
+  /**
+    * curl http://localhost:9000/api/context/:id
+    */
+  def getContextObject(user_id: String): ServiceCall[NotUsed, List[ContextRegistryString]]
+
+  /**
+    * curl http://localhost:9000/api/context/:id
+    * */
+  def getUserContext(user_id: String): ServiceCall[NotUsed, Seq[ContextRegistryString]]
+
 
   override final def descriptor: Descriptor = {
     import Service._
@@ -29,7 +40,9 @@ trait ContextService extends Service {
     named("/context")
       .withCalls(
         restCall(method = Method.POST, pathPattern = "/context/:id/save", saveContextRegistry _),
-        restCall(method = Method.GET, pathPattern = "/context/:id", getContextObject _)
+        pathCall("/context/:id", getUserContext _)
+        //restCall(method = Method.GET, pathPattern = "/context/:id", getContextObject _),
+        //restCall(method = Method.GET, pathPattern = "/context/:id", getUserContext _)
       )
       .withAutoAcl(autoAcl = true)
     // @formatter:on
@@ -50,6 +63,14 @@ case class RawContextRegistry(timestamp: String,
 
 object RawContextRegistry {
   implicit val format: Format[RawContextRegistry] = Json.format
+}
+
+case class ContextRegistryString(timestamp: String,
+                                 ruido: String, luz: String, loc: String,
+                                 conectividad: String, move: String, channel: String)
+
+object ContextRegistryString {
+  implicit val format: Format[ContextRegistryString] = Json.format
 }
 
 case class ContextRegistry(timestamp: WeekSection,
