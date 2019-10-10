@@ -1,6 +1,8 @@
 package co.edu.eafit.dis.user.impl
 
 
+import java.util.Date
+
 import akka.Done
 import co.edu.eafit.dis.user.api.User
 import com.lightbend.lagom.scaladsl.persistence.PersistentEntity.ReplyType
@@ -15,10 +17,10 @@ class UserEntity extends PersistentEntity {
   override type Event = UserEvent
   override type State = UserState
 
-  override def initialState: UserState = UserState("0")
+  override def initialState: UserState = UserState(null, null, null, null, null, null, null, null)
 
   override def behavior: Behavior = {
-    case UserState(_) => Actions().onCommand[CreateUser, Done] {
+    case UserState(_, _, _, _, _, _, _, _) => Actions().onCommand[CreateUser, Done] {
         case (CreateUser(user), ctx, _) =>
           ctx.thenPersist(
             UserCreated(user)
@@ -27,12 +29,15 @@ class UserEntity extends PersistentEntity {
           }
       }.onReadOnlyCommand[GetUserObject, User] {
         case (GetUserObject(id), ctx, state) =>
-          if (id == state.id) ctx.reply(User(state.id))
+          if (id == state.id)
+            ctx.reply(User(state.id, state.address, state.email, state.phone, state.birthdate,
+                                      state.gender, state.learningStyle, state.language))
           else ctx.commandFailed(UserNotFoundException("User doesn't exist"))
-          ctx.reply(User("0"))
       }.onEvent {
-        case (UserCreated(user), _) =>
-          UserState(user.id)
+        case (UserCreated(user), _) => user match {
+          case User(id, address, email, phone, birthdate, gender, learningStyle, language) =>
+            UserState(id, address, email, phone, birthdate, gender, learningStyle, language)
+        }
       }
   }
 }
@@ -41,7 +46,15 @@ class UserEntity extends PersistentEntity {
   * STATE
   * The current state held by the persistent entity.
   * */
-case class UserState(id: String)
+case class UserState(
+                      id: String,
+                      address: String,
+                      email: String,
+                      phone: String,
+                      birthdate: Date,
+                      gender: String,
+                      learningStyle: String,
+                      language: String)
 
 object UserState {
   implicit val format: Format[UserState] = Json.format
