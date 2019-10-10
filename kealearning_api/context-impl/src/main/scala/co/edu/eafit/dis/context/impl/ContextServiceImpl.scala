@@ -60,6 +60,25 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
         }
     }
 
+  override def allContext: ServiceCall[NotUsed, Seq[ContextRegistryString]] =
+    ServiceCall { _ =>
+      session
+        .selectAll(s"SELECT * FROM context")
+        .map { rows =>
+          rows.map { row =>
+            ContextRegistryString(
+              row.getString("timestamp"),
+              row.getString("ruido"),
+              row.getString("luz"),
+              row.getString("loc"),
+              row.getString("conectividad"),
+              row.getString("move"),
+              row.getString("channel")
+            )
+          }
+        }
+    }
+
   // TODO add the corner cases
   def mapping(rawContextRegistry: RawContextRegistry): ContextRegistryString = rawContextRegistry match {
       case RawContextRegistry(timestamp: String,

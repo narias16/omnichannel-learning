@@ -33,6 +33,11 @@ trait ContextService extends Service {
     * */
   def getUserContext(user_id: String): ServiceCall[NotUsed, Seq[ContextRegistryString]]
 
+  /**
+    * curl http://localhost:9000/api/context
+    * */
+  def allContext: ServiceCall[NotUsed, Seq[ContextRegistryString]]
+
 
   override final def descriptor: Descriptor = {
     import Service._
@@ -40,8 +45,8 @@ trait ContextService extends Service {
     named("/context")
       .withCalls(
         restCall(method = Method.POST, pathPattern = "/context/:id/save", saveContextRegistry _),
-        pathCall("/context/:id", getUserContext _)
-        //restCall(method = Method.GET, pathPattern = "/context/:id", getContextObject _),
+        pathCall("/context/:id", getUserContext _),
+        restCall(method = Method.GET, pathPattern = "/context", allContext)
         //restCall(method = Method.GET, pathPattern = "/context/:id", getUserContext _)
       )
       .withAutoAcl(autoAcl = true)
@@ -54,9 +59,9 @@ trait ContextService extends Service {
   */
 // TODO hacer read-side para el contexto
 // TODO - Connect frontend service
-// TODO - Que la base de datos no persista el contexto sino que se guarde en memoria
 // TODO - Add noise and accelerometer and connectivity from client
-// TODO - recommendation microservice
+// TODO - recommendation micro service
+// TODO - front end service
 case class RawContextRegistry(timestamp: String,
                            ruido: Double, luz: Double, lat: Double, lon: Double,
                            conectividad: String, acc: Double, canal: String)
