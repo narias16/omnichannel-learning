@@ -104,3 +104,24 @@ lazy val `user-impl` = (project in file("user-impl"))
     )
   )
   .dependsOn(`user-api`)
+
+lazy val `content-api` = (project in file("content-api"))
+  .settings(
+    libraryDependencies ++= Seq(
+      lagomScaladslApi
+    )
+  )
+
+lazy val `content-impl` = (project in file("content-impl"))
+  .enablePlugins(LagomScala)
+  .settings(
+    libraryDependencies ++= Seq(
+      lagomScaladslPersistenceCassandra,
+      lagomScaladslKafkaBroker,
+      lagomScaladslTestKit,
+      lagomScaladslPubSub,
+      macwire,
+      scalaTest,
+    )
+  )
+  .dependsOn(`content-api`)
