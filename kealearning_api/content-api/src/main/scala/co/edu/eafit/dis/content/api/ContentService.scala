@@ -33,8 +33,7 @@ case class Content(id: String,
                    duration: Int,
                    interactivity: String,
                    resourceType: String,
-                   interactivityLevel: Int
-                  )
+                   interactivityLevel: Int)
 
 object Content {
   implicit val format: Format[Content] = Json.format
@@ -46,8 +45,7 @@ case class ContentData(format: String,
                        duration: Int,
                        interactivity: String,
                        resourceType: String,
-                       interactivityLevel: Int
-                      )
+                       interactivityLevel: Int)
 
 object ContentData {
   implicit val format: Format[ContentData] = Json.format
