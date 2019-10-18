@@ -3,7 +3,7 @@ package co.edu.eafit.dis.context.impl
 import java.time.LocalDateTime
 
 import akka.Done
-import co.edu.eafit.dis.context.api.ContextRegistry
+import co.edu.eafit.dis.context.api.{ContextRegistry, ContextRegistryString}
 import com.lightbend.lagom.scaladsl.persistence.PersistentEntity.ReplyType
 import com.lightbend.lagom.scaladsl.persistence.{AggregateEvent, AggregateEventTag, PersistentEntity}
 import com.lightbend.lagom.scaladsl.playjson.{JsonSerializer, JsonSerializerRegistry}
@@ -23,21 +23,21 @@ class ContextEntity extends PersistentEntity {
     case ContextObjectState(_, _, _) => Actions().onCommand[SaveContextRegistry, Done] {
 
       // Command handler for the [[SaveContextRegistry]] command
-      case (SaveContextRegistry(contextRegistry), ctx, _) =>
+      case (SaveContextRegistry(id, contextRegistry), ctx, _) =>
         ctx.thenPersist(
-          ContextRegistrySaved(contextRegistry)
+          ContextRegistrySaved(id, contextRegistry)
         ) { _ =>
           ctx.reply(Done)
         }
 
-    }.onReadOnlyCommand[GetContentObject, List[ContextRegistry]] {
+    }.onReadOnlyCommand[GetContentObject, List[ContextRegistryString]] {
       case (GetContentObject(_), ctx, state) =>
         ctx.reply(state.registry)
 
     }.onEvent {
       // Event handler for the [[ContextRegistrySaved]] event
-      case (ContextRegistrySaved(contextRegistry), state) =>
-        ContextObjectState(state.id, contextRegistry :: state.registry, LocalDateTime.now().toString)
+      case (ContextRegistrySaved(id, contextRegistry), state) =>
+        ContextObjectState(id, contextRegistry :: state.registry, LocalDateTime.now().toString)
     }
   }
 }
@@ -47,7 +47,7 @@ class ContextEntity extends PersistentEntity {
   *
   * The current state held by the persistent entity.
   */
-case class ContextObjectState(id: String, registry: List[ContextRegistry], timestamp: String)
+case class ContextObjectState(id: String, registry: List[ContextRegistryString], timestamp: String)
 
 object ContextObjectState {
 
@@ -70,7 +70,7 @@ object ContextObjectState {
   * This interface defines all the events that the ContextEntity supports.
   */
 sealed trait ContextEvent extends AggregateEvent[ContextEvent] {
-  def aggregateTag: AggregateEventTag[ContextEvent] = ContextEvent.Tag
+  override def aggregateTag: AggregateEventTag[ContextEvent] = ContextEvent.Tag
 }
 
 object ContextEvent {
@@ -80,7 +80,7 @@ object ContextEvent {
 /**
   * An event that represents a save in [[ContextObjectState]].
   */
-case class ContextRegistrySaved(ctx: ContextRegistry) extends ContextEvent
+case class ContextRegistrySaved(user_id: String, ctx: ContextRegistryString) extends ContextEvent
 
 object ContextRegistrySaved {
 
@@ -106,7 +106,7 @@ sealed trait ContextCommand[R] extends ReplyType[R]
   * It has a reply type of [[Done]], which is sent back to the caller
   * when all the events emitted by this command are successfully persisted.
   */
-case class SaveContextRegistry(ctx: ContextRegistry) extends ContextCommand[Done]
+case class SaveContextRegistry(user_id: String, ctx: ContextRegistryString) extends ContextCommand[Done]
 
 object SaveContextRegistry {
 
@@ -127,7 +127,7 @@ object SaveContextRegistry {
   *
   * It has a reply type of List[ContextRegistry]
   * */
-case class GetContentObject(id: String) extends ContextCommand[List[ContextRegistry]]
+case class GetContentObject(id: String) extends ContextCommand[List[ContextRegistryString]]
 
 object GetContentObject {
   implicit val format: Format[GetContentObject] = Json.format

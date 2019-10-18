@@ -83,3 +83,45 @@ lazy val `context-impl` = (project in file("context-impl"))
     )
   )
   .dependsOn(`context-api`)
+
+lazy val `user-api` = (project in file("user-api"))
+  .settings(
+    libraryDependencies ++= Seq(
+      lagomScaladslApi
+    )
+  )
+
+lazy val `user-impl` = (project in file("user-impl"))
+  .enablePlugins(LagomScala)
+  .settings(
+    libraryDependencies ++= Seq(
+      lagomScaladslPersistenceCassandra,
+      lagomScaladslKafkaBroker,
+      lagomScaladslTestKit,
+      lagomScaladslPubSub,
+      macwire,
+      scalaTest,
+    )
+  )
+  .dependsOn(`user-api`)
+
+lazy val `content-api` = (project in file("content-api"))
+  .settings(
+    libraryDependencies ++= Seq(
+      lagomScaladslApi
+    )
+  )
+
+lazy val `content-impl` = (project in file("content-impl"))
+  .enablePlugins(LagomScala)
+  .settings(
+    libraryDependencies ++= Seq(
+      lagomScaladslPersistenceCassandra,
+      lagomScaladslKafkaBroker,
+      lagomScaladslTestKit,
+      lagomScaladslPubSub,
+      macwire,
+      scalaTest,
+    )
+  )
+  .dependsOn(`content-api`)
