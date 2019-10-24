@@ -12,7 +12,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://github.com/narias16/omnichannel-learning">
         kealearning
       </Link>{' '}
       {new Date().getFullYear()}
@@ -24,18 +24,16 @@ function Copyright() {
 export default function App() {
   return (
     <HashRouter>
-      <AppBar/>
+      <AppBar />
       <Container maxWidth="md">
         <Box my={4}>
-          <Courses/>
-          <Copyright/>
+          <div className="content">
+            <Route exact path="/" component={Courses} />
+            <Route path="/course/:name" component={Course} />
+          </div>
+          <Copyright />
         </Box>
       </Container>
-
-      <div className="content">
-        <Route exact path="/"/>
-        <Route path="/course/" component={Course} />
-      </div>
     </HashRouter>
   );
 }
