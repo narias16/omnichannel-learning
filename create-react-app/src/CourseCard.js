@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles({
   card: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CourseCard({value}) {
+export default function CourseCard({ value }) {
   const classes = useStyles();
 
   return (
@@ -38,10 +39,10 @@ export default function CourseCard({value}) {
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary">
-          Ir al curso
+          <NavLink to={`/course/${value.title}`}>Ir al curso</NavLink>
         </Button>
         <Button size="small" color="primary">
-          Acerca de 
+          <NavLink to="/">Acerca de</NavLink>
         </Button>
       </CardActions>
     </Card>

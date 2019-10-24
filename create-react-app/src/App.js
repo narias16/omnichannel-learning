@@ -4,7 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import AppBar from './AppBar'
-import MyView from './MyView';
+import Courses from './Courses';
+import Course from './Course'
 import { Route, NavLink, HashRouter } from "react-router-dom";
 
 function Copyright() {
@@ -12,7 +13,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        kealearning
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -23,13 +24,18 @@ function Copyright() {
 export default function App() {
   return (
     <HashRouter>
-      <AppBar />
+      <AppBar/>
       <Container maxWidth="md">
         <Box my={4}>
-          <MyView />
-          <Copyright />
+          <Courses/>
+          <Copyright/>
         </Box>
       </Container>
+
+      <div className="content">
+        <Route exact path="/"/>
+        <Route path="/course/" component={Course} />
+      </div>
     </HashRouter>
   );
 }
