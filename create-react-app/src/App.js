@@ -29,7 +29,7 @@ export default function App() {
         <Box my={4}>
           <div className="content">
             <Route exact path="/" component={Courses} />
-            <Route path="/course/:name" component={Course} />
+            <Route path="/course/:id" component={Course} />
           </div>
           <Copyright />
         </Box>

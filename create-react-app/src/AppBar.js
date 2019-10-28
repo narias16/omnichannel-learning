@@ -11,26 +11,26 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
   },
   title: {
     flexGrow: 1,
   },
 }));
 
+
+
 export default function ButtonAppBar() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
+          
           <Typography variant="h6" className={classes.title}>
-            Continúa donde lo dejaste... 
+            kealearning
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
@@ -38,4 +38,3 @@ export default function ButtonAppBar() {
     </div>
   );
 }
-

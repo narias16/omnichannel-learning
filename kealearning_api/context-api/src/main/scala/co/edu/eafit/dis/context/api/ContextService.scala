@@ -19,17 +19,17 @@ object ContextService {
   */
 trait ContextService extends Service {
   /**
-    * curl http://localhost:9000/api/context/:id/save
+    * curl http://localhost:9000/api/context/:user_id/save
     */
   def saveContextRegistry(user_id: String): ServiceCall[RawContextRegistry, Done]
 
   /**
-    * curl http://localhost:9000/api/context/:id
+    * curl http://localhost:9000/api/context/:user_id
     */
   def getContextObject(user_id: String): ServiceCall[NotUsed, List[ContextRegistryString]]
 
   /**
-    * curl http://localhost:9000/api/context/:id
+    * curl http://localhost:9000/api/context/:user_id
     * */
   def getUserContext(user_id: String): ServiceCall[NotUsed, Seq[ContextRegistryString]]
 

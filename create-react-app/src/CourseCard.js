@@ -39,7 +39,7 @@ export default function CourseCard({ value }) {
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary">
-          <NavLink to={`/course/${value.title}`}>Ir al curso</NavLink>
+          <NavLink to={`/course/${value.id}`}>Ir al curso</NavLink>
         </Button>
         <Button size="small" color="primary">
           <NavLink to="/">Acerca de</NavLink>

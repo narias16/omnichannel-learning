@@ -39,5 +39,5 @@ abstract class ContentApplication(context: LagomApplicationContext)
   persistentEntityRegistry.register(wire[ContentEntity])
 
   // Register any ReadSideProcessor's if any
-
+  readSide.register(wire[ContentEntityProcessor])
 }

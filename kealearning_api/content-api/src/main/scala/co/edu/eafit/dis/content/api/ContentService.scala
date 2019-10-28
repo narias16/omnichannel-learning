@@ -12,14 +12,24 @@ object ContentService {
 
 trait ContentService extends Service {
 
+
+  /**
+    * curl http://localhost:9000/api/context/content/new
+    */
   def newContent(): ServiceCall[ContentData, Done]
+
+  /**
+    * curl http://localhost:9000/api/content/content/:course_id
+    */
+  def courseObjects(courseId: String): ServiceCall[NotUsed, Seq[Content]]
 
   override def descriptor: Descriptor = {
     import Service._
     // @formatter:off
     named("content")
       .withCalls(
-        restCall(method = Method.POST, "/content/new/", newContent())
+        restCall(method = Method.POST, "/content/new/", newContent()),
+        restCall(method = Method.GET, "/content/:course_id", courseObjects _)
       )
       .withAutoAcl(autoAcl = true)
     // @formatter:on
@@ -27,6 +37,7 @@ trait ContentService extends Service {
 }
 
 case class Content(id: String,
+                   courseId: String,
                    format: String,
                    size: Int,
                    url: String,
@@ -39,7 +50,8 @@ object Content {
   implicit val format: Format[Content] = Json.format
 }
 
-case class ContentData(format: String,
+case class ContentData(courseId: String,
+                       format: String,
                        size: Int,
                        url: String,
                        duration: Int,
