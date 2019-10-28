@@ -20,14 +20,14 @@ class ContentEntityProcessor(session: CassandraSession, readSide: CassandraReadS
   override def aggregateTags: Set[AggregateEventTag[ContentEvent]] = Set(ContentEvent.Tag)
 
   private def createTable(): Future[Done] =
-    session.executeCreateTable("CREATE TABLE IF NOT EXISTS content(id TEXT, courseId TEXT, format TEXT, size INT, url TEXT, duration INT, interactivity TEXT, resourceType TEXT, interactivityLevel INT, PRIMARY KEY(id))")
+    session.executeCreateTable("CREATE TABLE IF NOT EXISTS content(id TEXT, title TEXT, courseId TEXT, format TEXT, size INT, url TEXT, duration INT, interactivity TEXT, resourceType TEXT, interactivityLevel INT, PRIMARY KEY(id))")
 
   private val writeContentPromise = Promise[PreparedStatement]
   private def writeContent: Future[PreparedStatement] = writeContentPromise.future
 
   private def prepareWriteContent(): Future[Done] = {
     val f = session.prepare(
-      "INSERT INTO content (id, courseId, format, size, url, duration, interactivity, resourceType, interactivityLevel) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
+      "INSERT INTO content (id, title, courseId, format, size, url, duration, interactivity, resourceType, interactivityLevel) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
     )
     writeContentPromise.completeWith(f)
@@ -40,6 +40,7 @@ class ContentEntityProcessor(session: CassandraSession, readSide: CassandraReadS
       val bindWriteContent = ps.bind()
       val content = eventStreamElement.event.content
       bindWriteContent.setString("id", content.id)
+      bindWriteContent.setString("title", content.title)
       bindWriteContent.setString("courseId", content.courseId)
       bindWriteContent.setString("format", content.format)
       bindWriteContent.setInt("size", content.size)

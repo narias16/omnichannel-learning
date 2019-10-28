@@ -21,9 +21,9 @@ class ContentServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
     val ref = persistentEntityRegistry.refFor[ContentEntity](id)
 
     val content: Content = contentData match {
-      case ContentData(courseId: String, format: String, size: Int, url: String, duration: Int, interactivity: String,
-      resourceType: String, interactivityLevel: Int) =>
-        Content(id, courseId, format, size, url, duration, interactivity, resourceType, interactivityLevel)
+      case ContentData(title: String, courseId: String, format: String, size: Int, url: String, duration: Int,
+      interactivity: String, resourceType: String, interactivityLevel: Int) =>
+        Content(id, title, courseId, format, size, url, duration, interactivity, resourceType, interactivityLevel)
     }
 
     ref.ask(CreateContent(content))
@@ -41,6 +41,7 @@ class ContentServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
         .map { rows =>
           rows.map { row =>
             Content(row.getString("id"),
+              row.getString("title"),
               row.getString("courseId"),
               row.getString("format"),
               row.getInt("size"),

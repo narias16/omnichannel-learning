@@ -37,6 +37,7 @@ trait ContentService extends Service {
 }
 
 case class Content(id: String,
+                   title: String,
                    courseId: String,
                    format: String,
                    size: Int,
@@ -50,7 +51,8 @@ object Content {
   implicit val format: Format[Content] = Json.format
 }
 
-case class ContentData(courseId: String,
+case class ContentData(title: String,
+                       courseId: String,
                        format: String,
                        size: Int,
                        url: String,

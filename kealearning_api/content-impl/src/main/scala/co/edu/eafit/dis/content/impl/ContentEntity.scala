@@ -14,10 +14,10 @@ class ContentEntity extends PersistentEntity {
   override type Event = ContentEvent
   override type State = Content
 
-  override def initialState: State = Content(null, null, null, -1, null, -1, null, null, -1)
+  override def initialState: State = Content(null, null, null, null, -1, null, -1, null, null, -1)
 
   override def behavior: Behavior = {
-    case Content(_, _, _, _, _, _, _, _, _) => Actions().onCommand[CreateContent, Done] {
+    case Content(_, _, _, _, _, _, _, _, _, _) => Actions().onCommand[CreateContent, Done] {
       case (CreateContent(content), ctx, _) =>
         ctx.thenPersist(
           ContentCreated(content)
