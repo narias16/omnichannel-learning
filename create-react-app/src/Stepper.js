@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function VerticalLinearStepper({ value }) {
+export default function VerticalLinearStepper({ value, handler }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [steps, setSteps] = React.useState([]);
@@ -51,14 +51,17 @@ export default function VerticalLinearStepper({ value }) {
     .catch(console.log)
 
   const handleNext = () => {
+    handler(steps[activeStep + 1]);
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
 
   const handleBack = () => {
+    handler(steps[activeStep - 1]);
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
   const handleReset = () => {
+    handler(steps[0]);
     setActiveStep(0);
   };
 
