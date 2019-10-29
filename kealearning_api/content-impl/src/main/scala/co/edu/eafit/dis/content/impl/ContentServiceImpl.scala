@@ -8,8 +8,8 @@ import com.lightbend.lagom.scaladsl.api.ServiceCall
 import com.lightbend.lagom.scaladsl.persistence.{PersistentEntityRegistry, ReadSide}
 import com.lightbend.lagom.scaladsl.persistence.cassandra.{CassandraReadSide, CassandraSession}
 import scala.concurrent.Future
-
 import scala.concurrent.ExecutionContext.Implicits.global
+
 class ContentServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
                          session: CassandraSession,
                          cassandraReadSide: CassandraReadSide,

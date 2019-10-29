@@ -11,7 +11,8 @@ val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4" % Test
 
 lazy val `kealearning` = (project in file("."))
   .aggregate(`kealearning-api`, `kealearning-impl`, `kealearning-stream-api`,
-    `kealearning-stream-impl`, `context-api`, `context-impl`)
+    `kealearning-stream-impl`, `context-api`, `context-impl`, `user-api`, `user-impl`,
+    `content-api`, `content-impl`)
 
 
 // Development enviroment configuration
@@ -34,7 +35,8 @@ lazy val `kealearning-impl` = (project in file("kealearning-impl"))
       lagomScaladslKafkaBroker,
       lagomScaladslTestKit,
       macwire,
-      scalaTest
+      scalaTest,
+      filters,
     )
   )
   .settings(lagomForkedTestSettings)
@@ -56,7 +58,8 @@ lazy val `kealearning-stream-impl` = (project in file("kealearning-stream-impl")
     libraryDependencies ++= Seq(
       lagomScaladslTestKit,
       macwire,
-      scalaTest
+      scalaTest,
+      filters,
     )
   )
   .dependsOn(`kealearning-stream-api`, `kealearning-api`)
@@ -80,6 +83,7 @@ lazy val `context-impl` = (project in file("context-impl"))
       lagomScaladslPubSub,
       macwire,
       scalaTest,
+      filters,
     )
   )
   .dependsOn(`context-api`)
@@ -101,6 +105,7 @@ lazy val `user-impl` = (project in file("user-impl"))
       lagomScaladslPubSub,
       macwire,
       scalaTest,
+      filters,
     )
   )
   .dependsOn(`user-api`)
@@ -122,6 +127,7 @@ lazy val `content-impl` = (project in file("content-impl"))
       lagomScaladslPubSub,
       macwire,
       scalaTest,
+      filters,
     )
   )
   .dependsOn(`content-api`)

@@ -28,8 +28,26 @@ const useStyles = makeStyles(theme => ({
 /**
  * Retrieve al course's learning objects
  */
-function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+function getSteps(id) {
+
+  var httpHeaders = {
+    'Access-Control-Request-Headers': 'origin, x-requested-with',
+    'origin': 'localhost:3000',
+  }
+
+  var headers = new Headers(httpHeaders);
+
+  var init = {
+    method: 'GET',
+    headers: headers,
+    mode: 'cors',
+    cache: 'default',
+  };
+
+  fetch(`http://localhost:9000/content/${id}`, init)
+    .then(res => res.json())
+    .then((data) => { return data })
+    .catch(console.log)
 }
 
 function getStepContent(step) {
@@ -50,10 +68,11 @@ function getStepContent(step) {
   }
 }
 
-export default function VerticalLinearStepper() {
+export default function VerticalLinearStepper({ value }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  const steps = getSteps();
+  const [steps, setSteps] = React.useState(getSteps(value));
+  console.log("Steps es " + steps);
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);

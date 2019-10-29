@@ -6,7 +6,7 @@ import Link from '@material-ui/core/Link';
 import AppBar from './AppBar'
 import Courses from './Courses';
 import Course from './Course'
-import { Route, NavLink, HashRouter } from "react-router-dom";
+import { Route, HashRouter } from "react-router-dom";
 
 function Copyright() {
   return (

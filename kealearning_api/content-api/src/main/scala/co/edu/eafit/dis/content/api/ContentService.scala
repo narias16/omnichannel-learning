@@ -2,7 +2,7 @@ package co.edu.eafit.dis.content.api
 
 import akka.{Done, NotUsed}
 import com.lightbend.lagom.scaladsl.api.transport.Method
-import com.lightbend.lagom.scaladsl.api.{Descriptor, Service, ServiceCall}
+import com.lightbend.lagom.scaladsl.api.{Descriptor, Service, ServiceAcl, ServiceCall}
 import play.api.libs.json.{Format, Json}
 
 
@@ -28,10 +28,11 @@ trait ContentService extends Service {
     // @formatter:off
     named("content")
       .withCalls(
-        restCall(method = Method.POST, "/content/new/", newContent()),
+        restCall(method = Method.POST, "/content/new", newContent()),
         restCall(method = Method.GET, "/content/:course_id", courseObjects _)
       )
       .withAutoAcl(autoAcl = true)
+      .withAcls(ServiceAcl.forMethodAndPathRegex(Method.OPTIONS, "/content/[^/]*"))
     // @formatter:on
   }
 }
