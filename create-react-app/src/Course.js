@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import { useParams } from "react-router-dom";
 import Stepper from "./Stepper.js"
 import Rating from '@material-ui/lab/Rating';
+import VideoComponent from './VideoComponent.js';
+import AudioPlayer from './AudioPlayer.js';
 
 const drawerWidth = 240;
 
@@ -42,20 +44,26 @@ function renderContent(content) {
     case ("video"):
       return(
         <React.Fragment>
-          <Typography>Not implemented</Typography>
+          <VideoComponent value={content.url} />
         </React.Fragment>
       );
     case ("audio"):
       return(
         <React.Fragment>          
-          <Typography>Not implemented</Typography>
+          <AudioPlayer value={content.url} />
         </React.Fragment>
       );
     case ("img"):
       return (
         <React.Fragment>
-          <Typography>Not implemented</Typography>
+          <Typography>Not implemented {content.url}</Typography>
         </React.Fragment>
+      );
+    default: 
+      return(
+          <React.Fragment>
+            <Typography>Tipo de contenido no soportado: {content.format}</Typography>
+          </React.Fragment>
       );
   }
 }
@@ -90,7 +98,6 @@ export default function ClippedDrawer() {
         <div className={classes.toolbar} />
         <Stepper value={id} handler={setContent} />
       </Drawer>
-
 
       <main className={classes.content}>
         <div className={classes.toolbar} />
