@@ -11,8 +11,6 @@ object ContentService {
 }
 
 trait ContentService extends Service {
-
-
   /**
     * curl http://localhost:9000/api/context/content/new
     */
