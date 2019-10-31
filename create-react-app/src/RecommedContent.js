@@ -3,8 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import tileData from './titleData.js';
+import TileData from './TileData.js';
+import Paper from '@material-ui/core/Paper';
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,21 +33,27 @@ export default function RecommenContent() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <GridList className={classes.gridList} cols={3}>
-        {tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
-            <GridListTileBar
-              title={tile.title}
-              classes={{
-                root: classes.titleBar,
-                title: classes.title
-              }}
-            />
-          </GridListTile>
-        ))}
-      </GridList>
-    </div>
+    <Paper className={classes.root}>
+      <div className={classes.root}>
+        <GridList className={classes.gridList} cols={3}>
+          {TileData.map(tile => (
+            <GridListTile key={tile.img} >
+              <img src={tile.img} alt={tile.title}/>
+              <NavLink to={`/course/${tile.id}`}>
+                <GridListTileBar
+                  title={tile.title}
+                  classes={{
+                    root: classes.titleBar,
+                    title: classes.title
+                  }}
+                />
+              </NavLink>
+
+            </GridListTile>
+            
+          ))}
+        </GridList>
+      </div>
+    </Paper>
   );
 }

@@ -5,6 +5,7 @@ import CourseCard from './CourseCard';
 import RecommendContent from './RecommedContent'
 import { Container } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -102,10 +103,12 @@ export default function Courses() {
             <br></br>
             <h2 style={{fontFamily:'Palatino'}}> Recomendaciones: </h2>
             <Paper className={classes.root}>
-            <RecommendContent/>
+             <RecommendContent/>
             </Paper>
             <br></br>
             <h2 style={{fontFamily:'Palatino'}}> Cursos: </h2>
+            <Divider />
+            <br></br>
             <div className={classes.root}>
                 <Grid container spacing={1}>
                     <Grid container item xs={12} spacing={3}>
