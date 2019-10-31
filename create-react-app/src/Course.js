@@ -9,6 +9,7 @@ import Stepper from "./Stepper.js"
 import Rating from '@material-ui/lab/Rating';
 import VideoComponent from './VideoComponent.js';
 import AudioPlayer from './AudioPlayer.js';
+import SimpleModal from './SimpleModal.js';
 
 const drawerWidth = 240;
 
@@ -68,7 +69,7 @@ function renderContent(content) {
   }
 }
 
-const inicio = { 
+const inicio = {
   "courseId": "1234",
   "title": "Introducción",
   "format": "pdf",
@@ -100,6 +101,7 @@ export default function ClippedDrawer() {
       </Drawer>
 
       <main className={classes.content}>
+        <SimpleModal />
         <div className={classes.toolbar} />
         {content ? (
           <React.Fragment>
@@ -119,14 +121,12 @@ export default function ClippedDrawer() {
               />
             </Box>
           </React.Fragment>
-
         ) : (
             <React.Fragment>
               <Typography>Has terminado el curso</Typography>
             </React.Fragment>
           )
         }
-
       </main>
     </div>
   );
