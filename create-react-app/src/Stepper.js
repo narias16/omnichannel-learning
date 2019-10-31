@@ -5,7 +5,6 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
-import StepButton from '@material-ui/core/StepButton';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
@@ -65,6 +64,11 @@ export default function VerticalLinearStepper({ value, handler }) {
     handler(steps[0]);
     setActiveStep(0);
   };
+
+  const setStep = (i) => {
+    handler(steps[i]);
+    setActiveStep(i);
+  }
 
   return (
     <div className={classes.root}>

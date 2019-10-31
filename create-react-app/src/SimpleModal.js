@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import Table from './Table.js'
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -20,15 +21,54 @@ function getModalStyle() {
 const useStyles = makeStyles(theme => ({
   paper: {
     position: 'absolute',
-    width: 400,
+    width: 800,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
 }));
+  
+const recommendedContent = [
+    {
+        "id": "20845a0d-dd33-46b7-8915-87cfbdebbbdd",
+        "title": "Trabajo final",
+        "courseId": "1234",
+        "format": "pdf",
+        "size": 456,
+        "url": "https://kealearning.s3.amazonaws.com/courses/1234/Red+de+Estaciones+Hidrologicas.pdf",
+        "duration": 10,
+        "interactivity": "activo-combinado-interactivo",
+        "resourceType": "map",
+        "interactivityLevel": 1
+    },
+    {
+        "id": "9f28b485-0664-4249-a969-9e69d94cf547",
+        "title": "Trabajo final",
+        "courseId": "1234",
+        "format": "pdf",
+        "size": 456,
+        "url": "https://kealearning.s3.amazonaws.com/courses/1234/Red+de+Estaciones+Hidrologicas.pdf",
+        "duration": 10,
+        "interactivity": "activo-combinado-interactivo",
+        "resourceType": "map",
+        "interactivityLevel": 1
+    },
+    {
+        "id": "a2497f74-b9fa-488e-b2de-06d30961f163",
+        "title": "Trabajo final",
+        "courseId": "1234",
+        "format": "video",
+        "size": 456,
+        "url": "https://kealearning.s3.amazonaws.com/courses/1234/What+is+reactive+programming.mp4",
+        "duration": 10,
+        "interactivity": "activo-combinado-interactivo",
+        "resourceType": "map",
+        "interactivityLevel": 1
+    }
+]
 
-export default function SimpleModal() {
+export default function SimpleModal({value, handler}) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -51,12 +91,13 @@ export default function SimpleModal() {
         onClose={handleClose}
       >
         <div style={modalStyle} className={classes.paper}>
+            <h2 id="simple-modal-title">Te recomendamos </h2>
             
-          <h2 id="simple-modal-title">Text in a modal</h2>
+            <Table value={recommendedContent} handleContent={handler} handleClose={handleClose}/>
+          
           <p id="simple-modal-description">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Puedes seleccionar una de estas opciones o seguir el curso a tu manera 
           </p>
-          <button type="button" onClick={handleClose}> Aceptar </button>
         </div>
       </Modal>
     </React.Fragment>
