@@ -100,12 +100,12 @@ export default function Courses() {
         <Container>
             <br></br>
             <br></br>
-            <h2 style={{fontFamily:'GT Walsheim'}}> Te Recomendamos: </h2>
+            <h2 style={{fontFamily:'Palatino'}}> Recomendaciones: </h2>
             <Paper className={classes.root}>
             <RecommendContent/>
             </Paper>
             <br></br>
-            <br></br>
+            <h2 style={{fontFamily:'Palatino'}}> Cursos: </h2>
             <div className={classes.root}>
                 <Grid container spacing={1}>
                     <Grid container item xs={12} spacing={3}>
