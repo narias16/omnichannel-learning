@@ -25,7 +25,7 @@ export default function App() {
   return (
     <HashRouter>
       <AppBar />
-      <Container maxWidth="md">
+      <Container maxWidth="md" >
         <Box my={4}>
           <div className="content">
             <Route exact path="/" component={Courses} />

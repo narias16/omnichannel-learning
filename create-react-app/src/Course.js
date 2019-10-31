@@ -10,6 +10,7 @@ import Rating from '@material-ui/lab/Rating';
 import VideoComponent from './VideoComponent.js';
 import AudioPlayer from './AudioPlayer.js';
 import SimpleModal from './SimpleModal.js';
+import { fontSize } from '@material-ui/system';
 
 const drawerWidth = 240;
 
@@ -125,7 +126,7 @@ export default function ClippedDrawer() {
           </React.Fragment>
         ) : (
             <React.Fragment>
-              <Typography>Has terminado el curso</Typography>
+              <Typography style={{fontFamily:'Gill Sans' ,fontSize:20}} >Has terminado el curso</Typography>
             </React.Fragment>
           )
         }

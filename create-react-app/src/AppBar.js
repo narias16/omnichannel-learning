@@ -24,11 +24,11 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar style={{color:'white'}} position="fixed" className={classes.appBar}>
         <Toolbar>
           
-          <Typography variant="h6" className={classes.title}>
-            kealearning
+          <Typography variant="h6" style={{ fontFamily: 'Didot-Bold', fontSize: 25 }}className={classes.title}>
+            Kea-learning
           </Typography>
         </Toolbar>
       </AppBar>

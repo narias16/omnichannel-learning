@@ -11,7 +11,8 @@ import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 345,
+    Width: 345,
+    height: 400
   },
 });
 
@@ -29,7 +30,7 @@ export default function CourseCard({ value }) {
           title={value.title}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h5" style={{ fontFamily: 'Georgia' }} component="h2">
             {value.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
