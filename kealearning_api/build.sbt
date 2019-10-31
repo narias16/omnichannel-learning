@@ -15,8 +15,8 @@ lazy val `kealearning` = (project in file("."))
     `content-api`, `content-impl`)
 
 
-// Development enviroment configuration
-lagomCassandraCleanOnStart in ThisBuild := false
+// Development environment configuration
+lagomCassandraCleanOnStart in ThisBuild := false // true to reload the database schema on each start up
 
 // Micro services definition
 lazy val `kealearning-api` = (project in file("kealearning-api"))
