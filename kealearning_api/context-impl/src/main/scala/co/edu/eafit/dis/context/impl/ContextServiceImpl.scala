@@ -102,7 +102,7 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
           else if (luz > 6) "alto"
           else "medio"
 
-        def latLonToLocation(lat: Double, lon: Double): String = "house" // TODO connect with users service
+        def latLonToLocation(lat: Double, lon: Double): String = "casa" // "otro"  "universidad"// TODO connect with users service
 
         def conectividadToLevel(conectividad: String): String = conectividad match {
           case "slow-2g" => "bajo"
@@ -113,12 +113,12 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
         }
 
         def accToMove(acc: Double): String =
-          if (acc > 0) "moving"
-          else "quiet"
+          if (acc > 0) "movimiento"
+          else "quieto"
 
         def channelToChannel(canal: String): String = canal match {
           case "web" => "web"
-          case "email" => "email"
+          case "email" => "correo"
           case _ => "undefined"
         }
 

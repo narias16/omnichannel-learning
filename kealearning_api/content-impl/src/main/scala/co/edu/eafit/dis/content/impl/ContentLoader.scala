@@ -8,8 +8,10 @@ import com.lightbend.lagom.scaladsl.devmode.LagomDevModeComponents
 import com.lightbend.lagom.scaladsl.persistence.cassandra.CassandraPersistenceComponents
 import com.lightbend.lagom.scaladsl.playjson.JsonSerializerRegistry
 import com.lightbend.lagom.scaladsl.server.{LagomApplication, LagomApplicationContext, LagomApplicationLoader, LagomServer}
-import play.api.libs.ws.ahc.AhcWSComponents
 import com.softwaremill.macwire._
+import play.api.libs.ws.ahc.AhcWSComponents
+import play.filters.cors.CORSComponents
+import play.api.mvc.EssentialFilter
 
 class ContentLoader extends LagomApplicationLoader {
   override def load(context: LagomApplicationContext): LagomApplication =
@@ -27,7 +29,10 @@ abstract class ContentApplication(context: LagomApplicationContext)
   extends LagomApplication(context)
     with CassandraPersistenceComponents
     with LagomKafkaComponents
-    with AhcWSComponents {
+    with AhcWSComponents
+    with CORSComponents {
+
+  override val httpFilters: Seq[EssentialFilter] = Seq(corsFilter)
 
   // Bind the service that this server provides
   override lazy val lagomServer: LagomServer = serverFor[ContentService](wire[ContentServiceImpl])
@@ -39,5 +44,5 @@ abstract class ContentApplication(context: LagomApplicationContext)
   persistentEntityRegistry.register(wire[ContentEntity])
 
   // Register any ReadSideProcessor's if any
-
+  readSide.register(wire[ContentEntityProcessor])
 }
