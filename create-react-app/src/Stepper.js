@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   button: {
     marginTop: theme.spacing(1),
     marginRight: theme.spacing(1),
-    color: "white"
+    
   },
   actionsContainer: {
     marginBottom: theme.spacing(2),

@@ -16,7 +16,7 @@ lazy val `kealearning` = (project in file("."))
 
 
 // Development enviroment configuration
-lagomCassandraCleanOnStart in ThisBuild := true
+lagomCassandraCleanOnStart in ThisBuild := false
 
 // Micro services definition
 lazy val `kealearning-api` = (project in file("kealearning-api"))
