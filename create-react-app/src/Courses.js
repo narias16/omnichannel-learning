@@ -2,13 +2,16 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import CourseCard from './CourseCard';
+import RecommendContent from './RecommedContent'
+import { Container } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
     },
     paper: {
-        padding: theme.spacing(1),
+        padding: theme.spacing(3,2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
@@ -24,13 +27,13 @@ const course1 = {
 const course2 = {
     id: "5467",
     title: "Lógica",
-    desc: "Aprenderás habilidades para leer, comprender y construir razonamientos de tipo argumentativo, en lo referente a la representación, modelación y solución de problemas que involucren razonamiento de tipo deductivo.",
+    desc: "Aprenderás habilidades para leer, comprender y construir razonamientos de tipo argumentativo, en lo referente a la representación, modelación y solución de problemas de razonamiento de tipo deductivo.",
     img: s3path + "/img/logica.png",
 };
 const course3 = {
     id: "15678",
     title: "Lenguajes de Programación",
-    desc: "El entendimiento de distintos paradigmas de programación te permitiran asimilar los conceptos mas generales de la computación y aplicarlos en la construcción de cualquier solución de software.",
+    desc: "El entendimiento de distintos paradigmas de programación, permitiran asimilar conceptos generales de la computación y aplicarlos en la construcción de cualquier solución de software.",
     img: s3path + "/img/lenguajes.jpg",
 };
 const course4 = {
@@ -93,18 +96,29 @@ export default function Courses() {
     }
 
     return (
-        <div className={classes.root}>
-            <Grid container spacing={1}>
-                <Grid container item xs={12} spacing={3}>
-                    <FormRow value={[course1, course2, course3]}/>
+   
+        <Container>
+            <br></br>
+            <br></br>
+            <h2 style={{fontFamily:'GT Walsheim'}}> Te Recomendamos: </h2>
+            <Paper className={classes.root}>
+            <RecommendContent/>
+            </Paper>
+            <br></br>
+            <br></br>
+            <div className={classes.root}>
+                <Grid container spacing={1}>
+                    <Grid container item xs={12} spacing={3}>
+                        <FormRow value={[course1, course2, course3]}/>
+                    </Grid>
+                    <Grid container item xs={12} spacing={3}>
+                        <FormRow value={[course4, course5, course6]}/>
+                    </Grid>
+                    <Grid container item xs={12} spacing={3}>
+                        <FormRow value={[course7, course8, course9]}/>
+                    </Grid>
                 </Grid>
-                <Grid container item xs={12} spacing={3}>
-                    <FormRow value={[course4, course5, course6]}/>
-                </Grid>
-                <Grid container item xs={12} spacing={3}>
-                    <FormRow value={[course7, course8, course9]}/>
-                </Grid>
-            </Grid>
-        </div>
+            </div>
+        </Container>
     );
 }
