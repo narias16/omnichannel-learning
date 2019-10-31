@@ -1,7 +1,9 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Table from './Table.js'
+import Typography from '@material-ui/core/Typography';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -92,12 +94,19 @@ export default function SimpleModal({value, handler}) {
       >
         <div style={modalStyle} className={classes.paper}>
             <h2 id="simple-modal-title">Te recomendamos </h2>
-            
+            <Typography id="simple-modal-description">
+                Puedes seleccionar una de estas opciones o seguir el curso a tu manera 
+            </Typography>
+            <br />
             <Table value={recommendedContent} handleContent={handler} handleClose={handleClose}/>
-          
-          <p id="simple-modal-description">
-            Puedes seleccionar una de estas opciones o seguir el curso a tu manera 
-          </p>
+            <br/>
+            <Button 
+                variant="contained" 
+                color="primary" 
+                className={classes.button} 
+                onClick={handleClose}>
+                Seguir el curso
+            </Button>
         </div>
       </Modal>
     </React.Fragment>
