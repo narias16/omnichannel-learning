@@ -26,7 +26,7 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
   override def saveContextRegistry(user_id: String): ServiceCall[RawContextRegistry, Done] = { ctx =>
     val ref = persistentEntityRegistry.refFor[ContextEntity](user_id)
 
-    // Parse numbers to classes
+    // Map numbers to classes
     val classifiedContext = mapping(ctx)
 
     ref.ask(SaveContextRegistry(user_id, classifiedContext))
@@ -98,7 +98,8 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
         }
 
         def luzToLevel(luz: Double): String =
-          if (luz < 2) "bajo"
+          if(luz < 0) "undefined"
+          else if (luz < 2) "bajo"
           else if (luz > 6) "alto"
           else "medio"
 
@@ -113,7 +114,8 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
         }
 
         def accToMove(acc: Double): String =
-          if (acc > 0) "movimiento"
+          if (acc < 0) "undefined"
+          else if (acc > 0) "movimiento"
           else "quieto"
 
         def channelToChannel(canal: String): String = canal match {

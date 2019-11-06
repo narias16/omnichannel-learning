@@ -9,6 +9,8 @@ import com.lightbend.lagom.scaladsl.persistence.cassandra.CassandraPersistenceCo
 import com.lightbend.lagom.scaladsl.broker.kafka.LagomKafkaComponents
 import com.lightbend.lagom.scaladsl.playjson.JsonSerializerRegistry
 import play.api.libs.ws.ahc.AhcWSComponents
+import play.filters.cors.CORSComponents
+import play.api.mvc.EssentialFilter
 
 import com.softwaremill.macwire._
 
@@ -31,7 +33,10 @@ abstract class ContextApplication(context: LagomApplicationContext)
   extends LagomApplication(context)
     with CassandraPersistenceComponents
     with LagomKafkaComponents
-    with AhcWSComponents {
+    with AhcWSComponents
+    with CORSComponents {
+
+  override val httpFilters: Seq[EssentialFilter] = Seq(corsFilter)
 
   // Bind the service that this server provides
   override lazy val lagomServer: LagomServer = serverFor[ContextService](wire[ContextServiceImpl])
