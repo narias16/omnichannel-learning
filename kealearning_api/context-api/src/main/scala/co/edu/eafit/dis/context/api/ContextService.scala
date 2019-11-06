@@ -50,7 +50,7 @@ trait ContextService extends Service {
         //restCall(method = Method.GET, pathPattern = "/context/:id", getUserContext _)
       )
       .withAutoAcl(autoAcl = true)
-      //.withAcls(ServiceAcl.forMethodAndPathRegex(Method.OPTIONS, "/context"))
+      .withAcls(ServiceAcl.forMethodAndPathRegex(Method.OPTIONS, "/context/[^/]*/"))
     // @formatter:on
   }
 }

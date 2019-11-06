@@ -1,7 +1,8 @@
 /**
- * Este archivo se ejecuta en el proyecto por medio de public/index.html
+ * Este script se ejecuta en el proyecto por medio de public/index.html
  * Esta ubicado en la siguiente dirección de S3
  * https://kealearning.s3.amazonaws.com/scripts/engine.js
+ * TODO: Crear CDN con CloudFront
  */
 
 // fecha-hora // lat // lon // luz // aceleracion // conectividad //ruido 
@@ -126,7 +127,7 @@ function sendData() {
     var httpHeaders = {
         'Access-Control-Request-Headers': 'origin, x-requested-with',
         'origin': 'localhost:3000',
-        'content-type': 'application/json; charset=UTF-8'
+        //'content-type': 'application/json; charset=UTF-8', 
     }
     
     var headers = new Headers(httpHeaders);
@@ -135,9 +136,8 @@ function sendData() {
         headers: headers,
         body: JSON.stringify(data),
         method: 'POST',
-        mode: 'no-cors',
+        mode: 'cors',
         cache: 'default',
-        Accept: '*/*',
     };
 
     fetch( `http://localhost:9000/context/${user_id}/save`, init)
