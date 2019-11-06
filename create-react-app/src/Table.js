@@ -34,7 +34,7 @@ export default function SimpleTable({value, handleContent, handleClose}) {
         <TableHead>
           <TableRow>
             <TableCell>Contenido</TableCell>
-            <TableCell align="right">Duracion</TableCell>
+            <TableCell align="right">Duracion (min)</TableCell>
             <TableCell align="right">Formato</TableCell>
             <TableCell align="right">Enlace</TableCell>
           </TableRow>

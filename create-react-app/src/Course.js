@@ -72,11 +72,11 @@ function renderContent(content) {
 
 const inicio = {
   "courseId": "1234",
-  "title": "Introducción",
+  "title": "Introducción al curso",
   "format": "pdf",
   "size": 456,
-  "url": "https://kealearning.s3.amazonaws.com/courses/1234/Red+de+Estaciones+Hidrologicas.pdf",
-  "duration": 10,
+  "url": "https://kealearning.s3.amazonaws.com/courses/1234/ST0242_20192.pdf",
+  "duration": 5,
   "interactivity": "activo-combinado-interactivo",
   "resourceType": "map",
   "interactivityLevel": 1
