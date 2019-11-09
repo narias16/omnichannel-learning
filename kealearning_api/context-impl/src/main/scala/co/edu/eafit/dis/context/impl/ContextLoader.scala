@@ -14,8 +14,6 @@ import play.api.mvc.EssentialFilter
 
 import com.softwaremill.macwire._
 
-
-
 class ContextLoader extends LagomApplicationLoader {
 
   override def load(context: LagomApplicationContext): LagomApplication =
