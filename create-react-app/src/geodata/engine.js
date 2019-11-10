@@ -127,7 +127,6 @@ function sendData() {
     var httpHeaders = {
         'Access-Control-Request-Headers': 'origin, x-requested-with',
         'origin': 'localhost:3000',
-        //'content-type': 'application/json; charset=UTF-8', 
     }
     
     var headers = new Headers(httpHeaders);
@@ -141,11 +140,11 @@ function sendData() {
     };
 
     fetch( `http://localhost:9000/context/${user_id}/save`, init)
-    .catch(console.log)
+    .catch(console.log);
 }
 
 window.ubicacion();
 window.light();
 window.getAccelerometer();
 
-var t = setInterval(sendData, 1000);
+var t = setInterval(sendData, 1000); // Update the context every second.

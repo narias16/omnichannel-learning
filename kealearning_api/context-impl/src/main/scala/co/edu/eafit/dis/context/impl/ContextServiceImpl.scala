@@ -22,7 +22,6 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
   /**
     * Write side
     * */
-
   override def saveContextRegistry(user_id: String): ServiceCall[RawContextRegistry, Done] = { ctx =>
     val ref = persistentEntityRegistry.refFor[ContextEntity](user_id)
 
@@ -63,7 +62,7 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
   override def allContext: ServiceCall[NotUsed, Seq[ContextRegistryString]] =
     ServiceCall { _ =>
       session
-        .selectAll(s"SELECT * FROM context")
+        .selectAll("SELECT * FROM context")
         .map { rows =>
           rows.map { row =>
             ContextRegistryString(
@@ -103,7 +102,8 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
           else if (luz > 6) "alto"
           else "medio"
 
-        def latLonToLocation(lat: Double, lon: Double): String = "casa" // "otro"  "universidad"// TODO connect with users service
+        // TODO connect with users service
+        def latLonToLocation(lat: Double, lon: Double): String = "universidad" // "otro" - "casa"
 
         def conectividadToLevel(conectividad: String): String = conectividad match {
           case "slow-2g" => "bajo"

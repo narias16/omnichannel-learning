@@ -34,6 +34,7 @@ abstract class ContextApplication(context: LagomApplicationContext)
     with AhcWSComponents
     with CORSComponents {
 
+  // CORS configuration
   override val httpFilters: Seq[EssentialFilter] = Seq(corsFilter)
 
   // Bind the service that this server provides

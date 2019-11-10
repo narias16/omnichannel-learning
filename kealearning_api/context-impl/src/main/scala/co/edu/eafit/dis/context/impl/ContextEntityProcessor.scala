@@ -45,14 +45,14 @@ class ContextEntityProcessor(session: CassandraSession, readSide: CassandraReadS
     writeContext.map { ps =>
       val bindWriteContext = ps.bind()
 
-      bindWriteContext.setString("user_id", eventElement.event.user_id)
-      bindWriteContext.setString("timestamp", eventElement.event.ctx.timestamp)
-      bindWriteContext.setString("ruido", eventElement.event.ctx.ruido)
-      bindWriteContext.setString("luz", eventElement.event.ctx.luz)
-      bindWriteContext.setString("loc", eventElement.event.ctx.loc)
-      bindWriteContext.setString("conectividad", eventElement.event.ctx.conectividad)
-      bindWriteContext.setString("move", eventElement.event.ctx.move)
-      bindWriteContext.setString("channel", eventElement.event.ctx.channel)
+      bindWriteContext.setString("user_id",       eventElement.event.user_id)
+      bindWriteContext.setString("timestamp",     eventElement.event.ctx.timestamp)
+      bindWriteContext.setString("ruido",         eventElement.event.ctx.ruido)
+      bindWriteContext.setString("luz",           eventElement.event.ctx.luz)
+      bindWriteContext.setString("loc",           eventElement.event.ctx.loc)
+      bindWriteContext.setString("conectividad",  eventElement.event.ctx.conectividad)
+      bindWriteContext.setString("move",          eventElement.event.ctx.move)
+      bindWriteContext.setString("channel",       eventElement.event.ctx.channel)
 
       List(bindWriteContext)
     }
