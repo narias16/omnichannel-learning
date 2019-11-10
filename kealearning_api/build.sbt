@@ -12,7 +12,7 @@ val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4" % Test
 lazy val `kealearning` = (project in file("."))
   .aggregate(`kealearning-api`, `kealearning-impl`, `kealearning-stream-api`,
     `kealearning-stream-impl`, `context-api`, `context-impl`, `user-api`, `user-impl`,
-    `content-api`, `content-impl`)
+    `content-api`, `content-impl`, `recommender-api`, `recommender-impl`)
 
 
 // Development environment configuration
@@ -131,3 +131,27 @@ lazy val `content-impl` = (project in file("content-impl"))
     )
   )
   .dependsOn(`content-api`)
+
+
+lazy val `recommender-api` = (project in file("recommender-api"))
+  .settings(
+    libraryDependencies ++= Seq(
+      lagomScaladslApi
+    )
+  )
+  .dependsOn(`context-api`)
+
+lazy val `recommender-impl` = (project in file("recommender-impl"))
+  .enablePlugins(LagomScala)
+  .settings(
+    libraryDependencies ++= Seq(
+      lagomScaladslPersistenceCassandra,
+      lagomScaladslKafkaBroker,
+      lagomScaladslTestKit,
+      lagomScaladslPubSub,
+      macwire,
+      scalaTest,
+      filters,
+    )
+  )
+  .dependsOn(`recommender-api`, `context-api`)

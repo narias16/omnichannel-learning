@@ -2,7 +2,7 @@ package co.edu.eafit.dis.context.api
 
 import akka.{Done, NotUsed}
 import com.lightbend.lagom.scaladsl.api.transport.Method
-import com.lightbend.lagom.scaladsl.api.{Descriptor, Service, ServiceCall}
+import com.lightbend.lagom.scaladsl.api.{Descriptor, Service, ServiceAcl, ServiceCall}
 import com.lightbend.lagom.scaladsl.api.deser.MessageSerializer._
 import play.api.libs.json.{Format, Json}
 
@@ -45,11 +45,12 @@ trait ContextService extends Service {
     named("/context")
       .withCalls(
         restCall(method = Method.POST, pathPattern = "/context/:id/save", saveContextRegistry _),
-        pathCall("/context/:id", getUserContext _),
+        restCall(method = Method.GET, "/context/:id", getUserContext _),
         restCall(method = Method.GET, pathPattern = "/context", allContext)
         //restCall(method = Method.GET, pathPattern = "/context/:id", getUserContext _)
       )
       .withAutoAcl(autoAcl = true)
+      .withAcls(ServiceAcl.forMethodAndPathRegex(Method.OPTIONS, "/context/[^/]*/"))
     // @formatter:on
   }
 }
@@ -57,11 +58,7 @@ trait ContextService extends Service {
 /**
   * The context object class.
   */
-// TODO hacer read-side para el contexto
-// TODO - Connect frontend service
-// TODO - Add noise and accelerometer and connectivity from client
 // TODO - recommendation micro service
-// TODO - front end service
 case class RawContextRegistry(timestamp: String,
                            ruido: Double, luz: Double, lat: Double, lon: Double,
                            conectividad: String, acc: Double, canal: String)

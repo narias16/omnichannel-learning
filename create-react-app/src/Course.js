@@ -10,7 +10,6 @@ import Rating from '@material-ui/lab/Rating';
 import VideoComponent from './VideoComponent.js';
 import AudioPlayer from './AudioPlayer.js';
 import SimpleModal from './SimpleModal.js';
-import { fontSize } from '@material-ui/system';
 
 const drawerWidth = 240;
 
@@ -71,8 +70,9 @@ function renderContent(content) {
 }
 
 const inicio = {
-  "courseId": "1234",
+  "id": "435145454113415", 
   "title": "Introducción al curso",
+  "courseId": "1234",
   "format": "pdf",
   "size": 456,
   "url": "https://kealearning.s3.amazonaws.com/courses/1234/ST0242_20192.pdf",
@@ -120,6 +120,29 @@ export default function ClippedDrawer() {
                 onChange={(event, newValue) => {
                   setValue(newValue);
                   // TODO Make API request to save rating
+                  let data = {
+                    user_id: "1",
+                    content_id: content.id,
+                    rating: newValue
+                  }
+
+                  var httpHeaders = {
+                      'Access-Control-Request-Headers': 'origin, x-requested-with',
+                      'origin': 'localhost:3000',
+                  }
+                  
+                  var headers = new Headers(httpHeaders);
+
+                  var init = {
+                      headers: headers,
+                      body: JSON.stringify(data),
+                      method: 'POST',
+                      mode: 'cors',
+                      cache: 'default',
+                  };
+
+                  fetch('http://localhost:9000/recommend/rated', init)
+                  .catch(console.log);
                 }}
               />
             </Box>

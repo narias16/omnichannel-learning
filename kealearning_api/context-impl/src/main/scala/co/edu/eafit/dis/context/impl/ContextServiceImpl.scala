@@ -22,11 +22,10 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
   /**
     * Write side
     * */
-
   override def saveContextRegistry(user_id: String): ServiceCall[RawContextRegistry, Done] = { ctx =>
     val ref = persistentEntityRegistry.refFor[ContextEntity](user_id)
 
-    // Parse numbers to classes
+    // Map numbers to classes
     val classifiedContext = mapping(ctx)
 
     ref.ask(SaveContextRegistry(user_id, classifiedContext))
@@ -63,7 +62,7 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
   override def allContext: ServiceCall[NotUsed, Seq[ContextRegistryString]] =
     ServiceCall { _ =>
       session
-        .selectAll(s"SELECT * FROM context")
+        .selectAll("SELECT * FROM context")
         .map { rows =>
           rows.map { row =>
             ContextRegistryString(
@@ -98,11 +97,13 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
         }
 
         def luzToLevel(luz: Double): String =
-          if (luz < 2) "bajo"
+          if(luz < 0) "undefined"
+          else if (luz < 2) "bajo"
           else if (luz > 6) "alto"
           else "medio"
 
-        def latLonToLocation(lat: Double, lon: Double): String = "casa" // "otro"  "universidad"// TODO connect with users service
+        // TODO connect with users service
+        def latLonToLocation(lat: Double, lon: Double): String = "universidad" // "otro" - "casa"
 
         def conectividadToLevel(conectividad: String): String = conectividad match {
           case "slow-2g" => "bajo"
@@ -113,7 +114,8 @@ class ContextServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
         }
 
         def accToMove(acc: Double): String =
-          if (acc > 0) "movimiento"
+          if (acc < 0) "undefined"
+          else if (acc > 0) "movimiento"
           else "quieto"
 
         def channelToChannel(canal: String): String = canal match {
