@@ -5,14 +5,16 @@ import numpy as np
 import pandas as pd
 import pickle
 import boto3
+import os
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 read = data.Data()
 datos = read.read_data()
+
 s3 = boto3.client('s3',
-                aws_access_key_id="AKIAWF6J5BVNBTUUFTO3",
-                aws_secret_access_key="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")
+                aws_access_key_id=os.getenv('AWS_KEY'),
+                aws_secret_access_key=os.environ.get('AWS_ACCESS_KEY'))
 
 
 class Recomendacion:
@@ -25,9 +27,9 @@ class Recomendacion:
         filename = 'modelo_proactivo.sav'
         pickle.dump(modelo, open(filename, 'wb'))
         try:
-        s3.upload_file(filename, 'kealearning', 'models/{}'.format(filename))
-        print("Upload Successful")
-        return True
+            s3.upload_file(filename, 'kealearning', 'models/{}'.format(filename))
+            print("Upload Successful")
+            return True
         except FileNotFoundError:
             print("The file was not found")
             return False
@@ -43,9 +45,9 @@ class Recomendacion:
         filename = 'modelo_reactivo.sav'
         pickle.dump(modelo, open(filename, 'wb'))
         try:
-        s3.upload_file(filename, 'kealearning', 'models/{}'.format(filename)) #'folder/{}'.format(filename)
-        print("Upload Successful")
-        return True
+            s3.upload_file(filename, 'kealearning', 'models/{}'.format(filename)) #'folder/{}'.format(filename)
+            print("Upload Successful")
+            return True
         except FileNotFoundError:
             print("The file was not found")
             return False
