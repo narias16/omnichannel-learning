@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 from flask import Flask, jsonify, request, abort
 import recomendacion as recom
 app = Flask(__name__)

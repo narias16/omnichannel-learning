@@ -27,7 +27,7 @@ class Recomendacion:
         filename = 'modelo_proactivo.sav'
         pickle.dump(modelo, open(filename, 'wb'))
         try:
-            s3.upload_file(filename, 'kealearning', 'models/{}'.format(filename))
+            s3.upload_file(filename, 'kealearning-copy', 'models/{}'.format(filename))
             print("Upload Successful")
             return True
         except FileNotFoundError:
@@ -45,7 +45,7 @@ class Recomendacion:
         filename = 'modelo_reactivo.sav'
         pickle.dump(modelo, open(filename, 'wb'))
         try:
-            s3.upload_file(filename, 'kealearning', 'models/{}'.format(filename)) #'folder/{}'.format(filename)
+            s3.upload_file(filename, 'kealearning-copy', 'models/{}'.format(filename)) #'folder/{}'.format(filename)
             print("Upload Successful")
             return True
         except FileNotFoundError:
@@ -57,7 +57,7 @@ class Recomendacion:
     
     def predict_proactivo(self,userId):
          # get a prediction for specific users and items.
-         modelo_proactivo =  s3.get_object(Bucket='kealearning',Key='models/modelo_proactivo.sav')
+         modelo_proactivo =  s3.get_object(Bucket='kealearning-copy',Key='models/modelo_proactivo.sav')
          bodyString = modelo_proactivo['Body'].read()
          baseline = pickle.loads(bodyString)
 
@@ -74,7 +74,7 @@ class Recomendacion:
     
     def predict_reactivo(self,userId,ruido,conect,acelm,ubicacion,luz,canal,contenido,time):
         print(contenido)
-        modelo_reactivo =  s3.get_object(Bucket ='kealearning', Key='models/modelo_reactivo.sav')
+        modelo_reactivo =  s3.get_object(Bucket ='kealearning-copy', Key='models/modelo_reactivo.sav')
         bodyString = modelo_reactivo['Body'].read()
         kmeans = pickle.loads(bodyString)
         # calcular formato y canal favorito del usuario
