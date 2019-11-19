@@ -57,7 +57,7 @@ export default function RecommenContent() {
   var init = {
     method: 'POST',
     headers: headers,
-    mode: 'no-cors',
+    mode: 'cors',
     body: JSON.stringify(data),
     cache: 'default'
   };
@@ -68,17 +68,9 @@ export default function RecommenContent() {
       var req = {
         method: 'GET',
         headers: headers,
-        mode: 'no-cors',
+        mode: 'cors',
         cache: 'default',
       }
-      
-      fetch(`http://localhost:9000/content/1234`, req)
-      .then(res => res.json())
-      .then((data) => {
-        console.log("DATA" + data)
-        setTileData(data)
-      })
-      .catch(console.log)
   })
   .catch(console.log)
 

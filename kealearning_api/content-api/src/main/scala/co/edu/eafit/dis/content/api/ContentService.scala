@@ -21,13 +21,16 @@ trait ContentService extends Service {
     */
   def courseObjects(courseId: String): ServiceCall[NotUsed, Seq[Content]]
 
+  def getContent(id: String): ServiceCall[NotUsed, Content]
+
   override def descriptor: Descriptor = {
     import Service._
     // @formatter:off
     named("content")
       .withCalls(
         restCall(method = Method.POST, "/content/new", newContent()),
-        restCall(method = Method.GET, "/content/:course_id", courseObjects _)
+        restCall(method = Method.GET, "/content/:course_id", courseObjects _),
+        restCall(method = Method.GET, "/content/get/:id", getContent _)
       )
       .withAutoAcl(autoAcl = true)
       .withAcls(ServiceAcl.forMethodAndPathRegex(Method.OPTIONS, "/content/[^/]*"))

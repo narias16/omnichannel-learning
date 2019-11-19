@@ -31,6 +31,11 @@ class ContentServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
     Future.successful(Done)
   }
 
+  override def getContent(id: String): ServiceCall[NotUsed, Content] = ServiceCall { _ =>
+    val ref = persistentEntityRegistry.refFor[ContentEntity](id)
+    ref.ask(GetContentObject(id))
+  }
+
   /**
     * Read side
     * */
