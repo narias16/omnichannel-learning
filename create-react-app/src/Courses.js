@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const s3path = "https://kealearning.s3.amazonaws.com";
+const s3path = "https://kealearning-copy.s3.amazonaws.com";
 const course1 = {
     id: "1234",
     title: "Fundamentos de Programación",

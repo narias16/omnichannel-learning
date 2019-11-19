@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
-  root: {
+  root: { 
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
@@ -31,12 +31,62 @@ const useStyles = makeStyles(theme => ({
 
 export default function RecommenContent() {
   const classes = useStyles();
+  const [contents, setContents] = React.useState([]);
+  const [tileData, setTileData] = React.useState([]);
+  
+  let data = {
+    id_estudiante: '1745265',
+	  ruido : 'bajo',
+	  luz: 'bajo',
+	  conect :'bajo',
+	  acelm : 'quieto',
+	  ubicacion : 'casa',
+	  canal: 'web',
+	  timestamp: 'weekday',
+	  id_contenido: '1,2,3'
+  }
+  
+  var httpHeaders = {
+    'Access-Control-Request-Headers': 'origin, x-requested-with',
+    'Content-Type': 'application/json',
+    'origin': 'localhost:3000',
+  }
+
+  var headers = new Headers(httpHeaders);
+
+  var init = {
+    method: 'POST',
+    headers: headers,
+    mode: 'no-cors',
+    body: JSON.stringify(data),
+    cache: 'default'
+  };
+  
+  fetch(`http://localhost:5000/api/recommend`, init)
+  .then(res => res.json())
+  .then((data) => {
+      var req = {
+        method: 'GET',
+        headers: headers,
+        mode: 'no-cors',
+        cache: 'default',
+      }
+      
+      fetch(`http://localhost:9000/content/1234`, req)
+      .then(res => res.json())
+      .then((data) => {
+        console.log("DATA" + data)
+        setTileData(data)
+      })
+      .catch(console.log)
+  })
+  .catch(console.log)
 
   return (
     <Paper className={classes.root}>
       <div className={classes.root}>
         <GridList className={classes.gridList} cols={3}>
-          {TileData.map(tile => (
+          {tileData.map(tile => (
             <GridListTile key={tile.img} >
               <img src={tile.img} alt={tile.title}/>
               <NavLink to={`/course/${tile.id}`}>
@@ -48,7 +98,6 @@ export default function RecommenContent() {
                   }}
                 />
               </NavLink>
-
             </GridListTile>
             
           ))}

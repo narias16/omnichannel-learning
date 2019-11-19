@@ -1,11 +1,22 @@
 #! /usr/bin/env python
 from flask import Flask, jsonify, request, abort
 import recomendacion as recom
+from flask_cors import CORS, cross_origin
+
+
 app = Flask(__name__)
 
+CORS(app, expose_headers='Authorization')
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+@cross_origin("/")
+
+def helloWorld():
+  return "Hello, cross-origin-world!"
 
 @app.route('/api/recommend', methods=['GET','POST'])
 def get_recommendation():
+   print(request.data)
    if not request.json:
         abort(400)
    userid = request.json['id_estudiante']

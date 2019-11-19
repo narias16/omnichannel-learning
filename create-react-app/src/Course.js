@@ -75,7 +75,7 @@ const inicio = {
   "courseId": "1234",
   "format": "pdf",
   "size": 456,
-  "url": "https://kealearning.s3.amazonaws.com/courses/1234/ST0242_20192.pdf",
+  "url": "https://kealearning-copy.s3.amazonaws.com/courses/1234/ST0242_20192.pdf",
   "duration": 5,
   "interactivity": "activo-combinado-interactivo",
   "resourceType": "map",
