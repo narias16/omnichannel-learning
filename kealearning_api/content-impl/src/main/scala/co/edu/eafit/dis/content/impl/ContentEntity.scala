@@ -24,6 +24,12 @@ class ContentEntity extends PersistentEntity {
         ) { _ =>
           ctx.reply(Done)
         }
+    }.onReadOnlyCommand[GetContentObject, Content] {
+      case (GetContentObject(id), ctx, state) =>
+        if(id == state.id)
+          ctx.reply(Content(state.id, state.title, state.courseId, state.format, state.size, state.url, state.duration,
+            state.interactivity, state.resourceType, state.interactivityLevel))
+        else throw new ContentNotFoundException("Content not found")
     }.onEvent {
       case(ContentCreated(content), _) => content
     }
@@ -78,7 +84,16 @@ object CreateContent {
   implicit val format: Format[CreateContent] = Json.format
 }
 
+/**
+  * A command that represents a read only for the [[Content]]
+  *
+  * It has a reply type of User
+  * */
+case class GetContentObject(id: String) extends ContentCommand[Content]
 
+object GetContentObject {
+  implicit val format: Format[GetContentObject] = Json.format
+}
 
 /**
   * EXCEPTIONS

@@ -16,7 +16,7 @@ class ContentServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
                          readSide: ReadSide) extends ContentService {
 
   override def newContent(): ServiceCall[ContentData, Done] = { contentData =>
-    val id = UUID.randomUUID().toString
+    val id = "3"//UUID.randomUUID().toString
 
     val ref = persistentEntityRegistry.refFor[ContentEntity](id)
 
@@ -29,6 +29,11 @@ class ContentServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
     ref.ask(CreateContent(content))
 
     Future.successful(Done)
+  }
+
+  override def getContent(id: String): ServiceCall[NotUsed, Content] = ServiceCall { _ =>
+    val ref = persistentEntityRegistry.refFor[ContentEntity](id)
+    ref.ask(GetContentObject(id))
   }
 
   /**
