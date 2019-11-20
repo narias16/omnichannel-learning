@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import TileData from './TileData.js';
 import Paper from '@material-ui/core/Paper';
-import {NavLink} from "react-router-dom";
+import ContentModal from './ContentModal.js';
+
 
 const useStyles = makeStyles(theme => ({
   root: { 
@@ -31,7 +31,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function RecommenContent() {
   const classes = useStyles();
-  const [contents, setContents] = React.useState([]);
   const [tileData, setTileData] = React.useState([]);
   
   let data = {
@@ -71,6 +70,12 @@ export default function RecommenContent() {
         mode: 'cors',
         cache: 'default',
       }
+
+      fetch(`http://localhost:9000/content/get/${data.contenido_canal}`)
+      .then(res => res.json())
+      .then((data) => {
+        setTileData([data])
+      })
   })
   .catch(console.log)
 
@@ -81,7 +86,7 @@ export default function RecommenContent() {
           {tileData.map(tile => (
             <GridListTile key={tile.img} >
               <img src={tile.img} alt={tile.title}/>
-              <NavLink to={`/course/${tile.id}`}>
+              <ContentModal content={tile} />
                 <GridListTileBar
                   title={tile.title}
                   classes={{
@@ -89,7 +94,6 @@ export default function RecommenContent() {
                     title: classes.title
                   }}
                 />
-              </NavLink>
             </GridListTile>
             
           ))}

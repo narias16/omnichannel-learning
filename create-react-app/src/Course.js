@@ -101,7 +101,7 @@ export default function ClippedDrawer() {
         <Stepper value={id} handler={setContent} />
       </Drawer>
 
-      <main className={classes.content}>        
+      <main className={classes.content}>
         <div className={classes.toolbar} />
         {content ? (
           <React.Fragment>

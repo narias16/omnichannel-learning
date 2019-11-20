@@ -29,6 +29,7 @@ class ContentEntity extends PersistentEntity {
         if(id == state.id)
           ctx.reply(Content(state.id, state.title, state.courseId, state.format, state.size, state.url, state.duration,
             state.interactivity, state.resourceType, state.interactivityLevel))
+        else throw new ContentNotFoundException("Content not found")
     }.onEvent {
       case(ContentCreated(content), _) => content
     }
