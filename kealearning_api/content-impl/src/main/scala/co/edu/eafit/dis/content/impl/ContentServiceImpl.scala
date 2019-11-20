@@ -16,7 +16,7 @@ class ContentServiceImpl(persistentEntityRegistry: PersistentEntityRegistry,
                          readSide: ReadSide) extends ContentService {
 
   override def newContent(): ServiceCall[ContentData, Done] = { contentData =>
-    val id = UUID.randomUUID().toString
+    val id = "18"//UUID.randomUUID().toString
 
     val ref = persistentEntityRegistry.refFor[ContentEntity](id)
 

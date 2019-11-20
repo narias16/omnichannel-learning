@@ -158,7 +158,10 @@ class Recomendacion:
 
         if contenido == 'undefined' and canal == 'web':
             content_contexto = best_content_context.loc[best_content_context['canal'] =='web']
-            return str(content_contexto.iloc[0:3]['id_contenido'].values)
+            content_contexto = content_contexto.drop_duplicates('id_contenido')
+            ids = content_contexto.iloc[0:3]['id_contenido'].values
+            strings = [{"contenido_canal" : str(ids[0])},{"contenido_canal" : str(ids[1])}, {"contenido_canal" : str(ids[2])} ]
+            return strings
         elif canal == 'web':
             # df.loc[df['column_name'] == some_value]
             canal_contexto = best_content_context.loc[best_content_context['canal'] =='web']

@@ -30,48 +30,66 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 4, 3),
   },
 }));
-  
-const recommendedContent = [
-  {
-    "courseId": "1234",
-    "title": "Curso de programación básica",
-    "format": "audio",
-    "size": 456,
-    "url": "https://kealearning-copy.s3.amazonaws.com/courses/1234/Curso+de+Programacio%CC%81n+Ba%CC%81sica+-+Clase+1.mp3",
-    "duration": 22,
-    "interactivity": "activo-combinado-interactivo",
-    "resourceType": "map",
-    "interactivityLevel": 1
-  },
-  {
-    "courseId": "1234",
-    "title": "Curso de programación básica",
-    "format": "video",
-    "size": 456,
-    "url": "https://kealearning-copy.s3.amazonaws.com/courses/1234/Curso+de+Programacio%CC%81n+Ba%CC%81sica+-+Clase+1.mp4",
-    "duration": 22,
-    "interactivity": "activo-combinado-interactivo",
-    "resourceType": "map",
-    "interactivityLevel": 1
-  },
-  {
-    "courseId": "1234",
-    "title": "Conceptos básicos",
-    "format": "pdf",
-    "size": 456,
-    "url": "https://kealearning-copy.s3.amazonaws.com/courses/1234/Dialnet-APL-4794572.pdf",
-    "duration": 10,
-    "interactivity": "activo-combinado-interactivo",
-    "resourceType": "map",
-    "interactivityLevel": 1
-  }
-]
 
 export default function SimpleModal({value, handler}) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(true);
+  const [tileData, setTileData] = React.useState([]);
+  const [ids, setIds] = React.useState([]);
+
+  let data = {
+    id_estudiante: '1745265',
+    ruido: 'bajo',
+    luz: 'bajo',
+    conect: 'bajo',
+    acelm: 'quieto',
+    ubicacion: 'casa',
+    canal: 'web',
+    timestamp: 'weekday',
+    id_contenido: 'undefined'
+  }
+  
+  var httpHeaders = {
+    'Access-Control-Request-Headers': 'origin, x-requested-with',
+    'Content-Type': 'application/json',
+    'origin': 'localhost:3000',
+  }
+  
+  var headers = new Headers(httpHeaders);
+  
+  var init = {
+    method: 'POST',
+    headers: headers,
+    mode: 'cors',
+    body: JSON.stringify(data),
+    cache: 'default'
+  };
+  
+  fetch(`http://localhost:5000/api/recommend`, init)
+  .then(res => res.json())
+  .then((data) => {
+      var req = {
+        method: 'GET',
+        headers: headers,
+        mode: 'no-cors',
+        cache: 'default',
+      }
+      
+      data.contenido_canal.map ( id => {
+        fetch(`http://localhost:9000/content/get/${id.contenido_canal}`, req)
+        .then(res => res.json())
+        .then((data) => {
+          console.log("PaSOOOO")
+          setTileData(tileData.push(data))
+        })
+        .catch(console.log)
+      })
+      
+      console.log(tileData)
+    })
+    .catch(console.log)
 
   const handleOpen = () => {
     setOpen(true);
@@ -95,7 +113,7 @@ export default function SimpleModal({value, handler}) {
                 Escoge el tipo de contenido que prefieras o haz click en <b>Mostrar</b> y te mostraremos el contenido mas acorde
             </Typography>
             <br />
-            <Table value={recommendedContent} handleContent={handler} handleClose={handleClose}/>
+            <Table value={tileData} handleContent={handler} handleClose={handleClose}/>
             <br/>
             <Button 
                 variant="contained" 
